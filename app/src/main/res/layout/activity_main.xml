@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_loadweights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="weight not load"
+             />
+
+        <Button
+            android:id="@+id/button_lw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="load weight"
+             />
+
+
+        <TextView
+            android:id="@+id/tv_classify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="result not showed"
+             />
+
+        <Button
+            android:id="@+id/button_classify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="classify"
+            />
+ />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <!-- Include other widget or layout tags here. These are considered
+                "child views" or "children" of the linear layout -->
+
+    </LinearLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>
