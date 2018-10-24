@@ -12,35 +12,45 @@
         android:paddingRight="16dp"
         android:orientation="vertical"
         android:gravity="center">
+
         <TextView
             android:id="@+id/tv_loadweights"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="weight not load"
-             />
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="weight not load" />
 
         <Button
             android:id="@+id/button_lw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="load weight"
-             />
+            />
 
 
         <TextView
             android:id="@+id/tv_classify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             android:text="result not showed"
-             />
+            />
 
         <Button
             android:id="@+id/button_classify"
-            android:layout_width="wrap_content"
+            android:layout_width="114dp"
             android:layout_height="wrap_content"
-            android:text="classify"
-            />
- />
+            android:text="classify" />
+
+        <Button
+            android:id="@+id/button_clear"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="clear" />
+    />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline"
@@ -51,9 +61,6 @@
 
         <!-- Include other widget or layout tags here. These are considered
                 "child views" or "children" of the linear layout -->
-
     </LinearLayout>
-
-
 
 </android.support.constraint.ConstraintLayout>

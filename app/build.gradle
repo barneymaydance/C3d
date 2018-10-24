@@ -1,19 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            storeFile file('/home/nliu03/AndroidStudio/keystore/android.jks')
-            storePassword 'liuning'
-            keyAlias 'key0'
-            keyPassword 'liuning'
-        }
-    }
+//    signingConfigs {
+//        config {
+//            storeFile file('/home/nliu03/AndroidStudio/keystore/android.jks')
+//            storePassword 'liuning'
+//            keyAlias 'key0'
+//            keyPassword 'liuning'
+//        }
+//    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "edu.northeastern.nliu.c3d"
-        minSdkVersion 27
-        targetSdkVersion 27
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -22,7 +22,7 @@ android {
                 cppFlags ""
             }
         }
-        signingConfig signingConfigs.config
+//        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
