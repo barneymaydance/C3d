@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
             }
-
         }
     }
 
@@ -80,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                1);
 
         bt_ldweight = (Button) findViewById(R.id.button_lw);
         bt_classify = (Button) findViewById(R.id.button_classify);
@@ -116,17 +118,20 @@ public class MainActivity extends AppCompatActivity {
                 float[] img = loadImg(environmentPath + "input");
 
                 long startTime = System.currentTimeMillis();
-                client.classify(networkPtr, img, imgShape);
+                float[] logits=client.classify(networkPtr, img, imgShape);
                 long endTime = System.currentTimeMillis();
                 long runTime = endTime - startTime;
-                tv_classify.setText(String.format("Time: %d ms", runTime));
+                String out="";
+                for(float n:logits){
+                    out=out+Float.toString(n);
+                }
+                tv_classify.setText(String.format("Time: %d ms, %s", runTime, out));
 
             }
         });
 
         bt_clear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 tv_ldweights.setText("");
                 tv_classify.setText("");
             }
@@ -157,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
 //        imageCollection=new ArrayList<Bitmap>();
         imageCollection = new ArrayList<Float>();
         try {
-//                ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
             FileInputStream fin = new FileInputStream(path);
             BufferedInputStream bin = new BufferedInputStream(fin);
             DataInputStream din = new DataInputStream(bin);

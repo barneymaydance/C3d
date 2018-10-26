@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-//    signingConfigs {
-//        config {
-//            storeFile file('/home/nliu03/AndroidStudio/keystore/android.jks')
-//            storePassword 'liuning'
-//            keyAlias 'key0'
-//            keyPassword 'liuning'
-//        }
-//    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "edu.northeastern.nliu.c3d"
@@ -22,12 +14,20 @@ android {
                 cppFlags ""
             }
         }
-//        signingConfig signingConfigs.config
+        signingConfigs {
+            config {
+                storeFile file('/Users/didi/Documents/native/modelc3d.jks')
+                storePassword '123456'
+                keyAlias 'key0'
+                keyPassword '123456'
+            }
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
         DebugType {
             debuggable true
