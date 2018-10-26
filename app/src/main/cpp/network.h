@@ -34,9 +34,9 @@ public:
     Eigen::RowVectorXf _bias;
 //    Eigen::Matrix <float, 1,Dynamic> _bias;
     Eigen::Matrix<float, Dynamic, Dynamic> _weightdense;
-    Eigen::Matrix<float, Dynamic, Dynamic> _input;
+    Eigen::Matrix<float, Dynamic, Dynamic, RowMajor> _input;
     int *_inputShape;
-    Eigen::Matrix<float, Dynamic, Dynamic> _output;
+    Eigen::Matrix<float, Dynamic, Dynamic, RowMajor> _output;
     Eigen::Matrix<float, Dynamic, Dynamic> _colBuffer;
     int *_outputShape;
 

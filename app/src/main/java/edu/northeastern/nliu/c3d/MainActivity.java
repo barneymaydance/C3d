@@ -141,20 +141,20 @@ public class MainActivity extends AppCompatActivity {
 
     private float[] loadImg(String path) {
         float[] image = new float[NB_PER_FRAME * CROP_WIDTH * CROP_WIDTH * RGB_CHANNEL];
-        File file = new File(path);
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            int count = 0;
-            while ((line = br.readLine()) != null) {
-                image[count] = Float.valueOf(line);
-                count++;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        File file = new File(path);
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+//            String line;
+//            int count = 0;
+//            while ((line = br.readLine()) != null) {
+//                image[count] = Float.valueOf(line);
+//                count++;
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return image;
     }
 
