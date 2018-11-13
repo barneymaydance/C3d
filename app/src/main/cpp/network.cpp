@@ -46,8 +46,8 @@ void ThreeDConvLayer::forward() {
     //multiplication for convlution
     temp = _colBuffer * _weightdense;
 
-    __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "layer %s value of certain point is %s",
-                        _name.c_str(), to_string(temp(11, 11)).c_str());
+//    __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "layer %s value of certain point is %s",
+//                        _name.c_str(), to_string(temp(11, 11)).c_str());
     //add bias
 
     temp.rowwise() += _bias;
@@ -132,8 +132,8 @@ float* network::predict(Eigen::Matrix<float, Dynamic, Dynamic> image) {
         layers[i]->forward();
         if (i == layers.size() - 1) {
             finaloutput = layers[i]->_output;
-            __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "last output certain point value is %s",
-                                to_string(finaloutput(0, 0)).c_str());
+//            __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "last output certain point value is %s",
+//                                to_string(finaloutput(0, 0)).c_str());
         }
     }
 

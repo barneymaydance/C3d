@@ -1,4 +1,4 @@
-package edu.northeastern.nliu.c3d;
+package edu.northeastern.nliu.sst;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

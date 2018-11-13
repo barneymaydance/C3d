@@ -1,8 +1,7 @@
-package edu.northeastern.nliu.c3d;
+package edu.northeastern.nliu.sst;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,26 +18,26 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.OutputStream;
-import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final int CROP_WIDTH=112;
-    private static final int NB_PER_FRAME=16;
-    private static final int RGB_CHANNEL=3;
+    private static final int CROP_WIDTH = 112;
+    private static final int NB_PER_FRAME = 16;
+    private static final int RGB_CHANNEL = 3;
 
     static {
         System.loadLibrary("native-lib");
     }
+
+//    private static final String[] activityList={"抽烟","玩手机","跳高","两人拉扯","挥手","点头","摇头"};
+    private static final String[] activityList={"跳高","挥手","摇头"};
+//    private static final String[] activityList = {"BasketballDunk", "CleanAndJerk", "CliffDiving", "FrisbeeCatch", "HammerThrow",
+//            "HighJump", "JavelinThrow","LongJump","PoleVault","SoccerPenalty"};//ucf101 dataset select 10 classes
 
     private Button bt_ldweight;
     private Button bt_classify;
@@ -89,22 +88,22 @@ public class MainActivity extends AppCompatActivity {
 
         tv_ldweights = (TextView) findViewById(R.id.tv_loadweights);
         tv_classify = (TextView) findViewById(R.id.tv_classify);
-        client= new NativeEntryInterface();
+        client = new NativeEntryInterface();
 
         //set img path
-        environmentPath= Environment.getExternalStorageDirectory().getAbsolutePath() + "/c3d_resource/";
+        environmentPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/c3d_resource/";
 
         Log.d(TAG, environmentPath);
 
         //build network
         //DHWC
-        networkPtr = client.buildNetwork();
+        networkPtr = client.buildC3DNetwork();
 
         //load weights
         bt_ldweight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                client.loadParameters(networkPtr, environmentPath);
+                client.loadC3DParameters(networkPtr, environmentPath);
                 tv_ldweights.setText("Weight loaded!");
 
             }
@@ -116,16 +115,32 @@ public class MainActivity extends AppCompatActivity {
 
 //                loadImgFromStorage(environmentPath+"predict_score.bin");
                 float[] img = loadImg(environmentPath + "input");
-
-                long startTime = System.currentTimeMillis();
-                float[] logits=client.classify(networkPtr, img, imgShape);
-                long endTime = System.currentTimeMillis();
-                long runTime = endTime - startTime;
-                String out="";
-                for(float n:logits){
-                    out=out+Float.toString(n);
+                float[] logits=new float[1];
+                long startTime;
+                long endTime;
+                long runTime=0;
+                for (int i=0;i<10;i++){
+                    startTime = System.currentTimeMillis();
+                    logits= client.classify(networkPtr, img, imgShape);
+                    endTime = System.currentTimeMillis();
+                    runTime = endTime - startTime;
+                    Log.v(TAG, String.format("Repeat: %d c3d, time %d", i, runTime));
                 }
-                tv_classify.setText(String.format("Time: %d ms, %s", runTime, out));
+
+                int predictIndx = 0;
+                float curMax = Float.MAX_VALUE;
+                for (int i = 1; i <logits.length;  i++) {
+                    if (logits[i] > curMax) {
+                        curMax = logits[i];
+                        predictIndx = i;
+                    }
+                }
+                String out = "";
+                for (float n : logits) {
+                    out = out + Float.toString(n);
+                }
+
+                tv_classify.setText(String.format("Time: %d ms, %d", runTime, predictIndx));
 
             }
         });
@@ -141,24 +156,24 @@ public class MainActivity extends AppCompatActivity {
 
     private float[] loadImg(String path) {
         float[] image = new float[NB_PER_FRAME * CROP_WIDTH * CROP_WIDTH * RGB_CHANNEL];
-//        File file = new File(path);
-//
-//        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-//            String line;
-//            int count = 0;
-//            while ((line = br.readLine()) != null) {
-//                image[count] = Float.valueOf(line);
-//                count++;
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        File file = new File(path);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            int count = 0;
+            while ((line = br.readLine()) != null) {
+                image[count] = Float.valueOf(line);
+                count++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return image;
     }
 
-    private List loadImgFromStorage(String path){
+    private List loadImgFromStorage(String path) {
 //        imageCollection=new ArrayList<Bitmap>();
         imageCollection = new ArrayList<Float>();
         try {

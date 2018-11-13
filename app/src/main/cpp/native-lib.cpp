@@ -1,10 +1,8 @@
 #include <jni.h>
 #include <string>
 #include "network.h"
-#include <string>
 #include <android/log.h>
 #include <fstream>
-#include "network.h"
 
 #define  LOG_TAG    "debug::native-lib.cpp"
 
@@ -14,7 +12,7 @@ int my_counter __attribute__((aligned(8)));
 
 extern "C"
 JNIEXPORT jlong JNICALL
-Java_edu_northeastern_nliu_c3d_NativeEntryInterface_buildNetwork(JNIEnv *env, jobject instance) {
+Java_edu_northeastern_nliu_sst_NativeEntryInterface_buildC3DNetwork(JNIEnv *env, jobject instance) {
 
     network *networkObj = new network("c3d");
     //add layers
@@ -79,7 +77,7 @@ Java_edu_northeastern_nliu_c3d_NativeEntryInterface_buildNetwork(JNIEnv *env, jo
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_edu_northeastern_nliu_c3d_NativeEntryInterface_loadParameters(JNIEnv *env, jobject instance,
+Java_edu_northeastern_nliu_sst_NativeEntryInterface_loadC3DParameters(JNIEnv *env, jobject instance,
                                                                    jlong networkPtr,
                                                                    jstring environmentPath_) {
     string path;
@@ -171,7 +169,7 @@ Java_edu_northeastern_nliu_c3d_NativeEntryInterface_loadParameters(JNIEnv *env, 
 
 extern "C"
 JNIEXPORT jfloatArray JNICALL
-Java_edu_northeastern_nliu_c3d_NativeEntryInterface_classify(JNIEnv *env, jobject instance,
+Java_edu_northeastern_nliu_sst_NativeEntryInterface_classify(JNIEnv *env, jobject instance,
                                                              jlong networkPtr,
                                                              jfloatArray img_,
                                                              jintArray imgShape_) {
